@@ -19,7 +19,7 @@ function App(){
   }, [])
   let clickWithdrawWithFee = async () => {
     const feeAmount = 0.05;
-  
+    try {
     // Realizar el retiro con la tarifa
     const tx = await bank.current.withdrawWithFee({
       value: ethers.utils.parseEther(String(feeAmount)),
@@ -28,6 +28,11 @@ function App(){
   
     await tx.wait();
     updateBalances();
+  } catch (error) {
+    console.error("Error withdrawing with fee:", error);
+   
+    alert("Error withdrawing with fee. Review the amount");
+}
   }
   
   let updateBalances = async () => {
@@ -65,9 +70,15 @@ let onSubmitDeposit = async (e) => {
   updateBalances();
 }
 let clickWithdraw = async (e) => {
-  
+  try {
   await await bank.current.withdraw();
   updateBalances();
+  
+} catch (error) {
+  console.error("Error making  Withdraw", error);
+
+  alert("Error making  Withdraw ");
+}
 }
 
 
@@ -94,7 +105,7 @@ let clickWithdraw = async (e) => {
     e.preventDefault();
 
     const BNBamount = parseFloat(e.target.elements[0].value);
-
+    try {
     // Wei to BNB se pasa con ethers.utils recibe un String!!!
     const tx = await bank.current.doubleInterestDeposit({
         value: ethers.utils.parseEther(String(BNBamount)),
@@ -104,12 +115,23 @@ let clickWithdraw = async (e) => {
 
     await tx.wait();
     updateBalances();
+  } catch (error) {
+    console.error("Error making double interest deposit:", error);
+
+    alert("Error making double interest deposit. Please try again.");
+}
 }
 
 let clickWithdrawWithLock = async () => {
     // Realizar retiro con bloqueo de 10 minutos
+    try {
     await await bank.current.withdrawWithLock();
     updateBalances();
+  } catch (error) {
+    console.error("Error making double Withdraw with doible deposit", error);
+
+    alert("Error making double Withdraw with doible deposit");
+}
 }
 
 
