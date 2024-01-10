@@ -18,21 +18,15 @@ function App(){
       updateBalances();
   }, [])
   let clickWithdrawWithFee = async () => {
-    const feeAmount = 0.05;
     try {
-    // Realizar el retiro con la tarifa
-    const tx = await bank.current.withdrawWithFee({
-      value: ethers.utils.parseEther(String(feeAmount)),
-   
-    });
-  
-    await tx.wait();
-    updateBalances();
-  } catch (error) {
-    console.error("Error withdrawing with fee:", error);
-   
-    alert("Error withdrawing with fee. Review the amount");
-}
+      // Realizar el retiro con la tarifa
+      const tx = await bank.current.withdrawWithFee();
+      await tx.wait();
+      updateBalances();
+    } catch (error) {
+      console.error("Error withdrawing with fee:", error);
+      alert("Error withdrawing with fee. Review the amount");
+    }
   }
   
   let updateBalances = async () => {
